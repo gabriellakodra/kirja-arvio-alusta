@@ -8,4 +8,4 @@ kirja-arvostelu alusta, perusvaatimusten mukaan seuraavanlaisia ominaisuuksia:
 - soveluksen luokittelut: kirja-arvostelun yhteyteen esim. genre, kirjailija, julkaisuvuosi ja pistearvostelu
 - toissijainen tietokohde: voi myös jättää pelkän pistearvostelun (ilman omaa kirjallista arvostelua) tietylle kirjalle, jolloin kaikki kirjan saamat pisteet vaikuttavat yleispistemäärään (keskiarvo)
 - --> yhteen kirjaan on voitu tehdä eri käyttäjiltä eri arvosteluita, mutta nämä tunnistetaan samaksi kirjaksi jolloin pistemäärä kaikissa kuitenkin sama
-- 
+
