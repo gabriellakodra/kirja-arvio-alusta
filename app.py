@@ -78,8 +78,11 @@ def new_thread():
 
     title = request.form["title"]
     content = request.form["content"]
+    points = request.form.get("points")
     if not title or len(title) > 100 or len(content) > 5000:
         abort(403)
+    if points:
+        content += f"\nPistearvostelu: {points}/5"
     user_id = session["user_id"]
 
     thread_id = forum.add_thread(title, content, user_id)
@@ -112,12 +115,27 @@ def edit_message(message_id):
         abort(403)
 
     if request.method == "GET":
-        return render_template("edit.html", message=message)
+        points = None
+        if "Pistearvostelu:" in message["content"]:
+            lines = message["content"].splitlines()
+            for line in lines[::-1]:
+                if line.startswith("Pistearvostelu:"):
+                    points = line.strip().split(" ")[1].split("/")[0]
+                    break
+        return render_template("edit.html", message=message, points=points)
 
     if request.method == "POST":
         content = request.form["content"]
+        points = request.form.get("points")
         if len(content) > 5000:
             abort(403)
+
+        content_lines = content.splitlines()
+        content_lines =  [line for line in content_lines if not line.startswith("Pistearvostelu:")]
+        content = "\n".join(content_lines)
+
+        if points:
+            content += f"\nPistearvostelu: {points}/5"
         forum.update_message(message["id"], content)
         return redirect("/thread/" + str(message["thread_id"]))
 
