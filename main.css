@@ -12,8 +12,9 @@ body {
   .nav {
     color: #144048;
   } 
-  .thread {
-    border: 1px solid #144048;
+
+  .content {
+    border: 1px #144048;
     margin: 1em;
     padding: 0.2em 0.5em;
     background-color: #89A27E; 
@@ -21,13 +22,53 @@ body {
     padding: 1em;
     margin: 0.3em 0;
   }
-  .bookthread {
-    color: #144048;
-    max-width: 70em;   
-  } 
-  .profile_picture {
-    display: block;
-    margin: auto;
-    display: flex;
-    justify-content: center;  
-  } 
+  
+  h1 {
+    margin: 2;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 0;
+  }
+  
+  nav {
+    text-align: center;
+  }
+  
+  nav ul {
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav li {
+    display: inline-block;
+    padding: 0 1em;
+    margin: 0;
+  }
+  
+  nav li:not(:first-of-type) {
+    margin-left: -0.25em;
+  }
+  
+  nav li:not(:last-of-type) {
+    border-right: 1px solid #144048;
+  }
+  
+  .page-nav {
+    text-align: center;
+  }
+  
+  .message, .thread {
+    border: 2px solid #144048;
+    margin: 1em;
+    padding: 0.2em 0.5em;
+  }
+  
+  .info {
+    border: 2px #144048;
+    margin: 1em;
+    padding: 0.5em;
+    color: #A7BE9C;
+  }
+
