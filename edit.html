@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Kommentin muokkaus</title>
-</head>
-
-<body>
-  <h1>Kommentin muokkaus</h1>
+{% extends "layout.html" %}
+{% block title %}Muokkaa viestiä{% endblock %}
+{% block content %}
+ 
+ <h2>Kommentin muokkaus</h2>
 
   <form action="/edit/{{ message.id }}" method="post">
     <p>
       Kommentti:<br />
       <textarea name="content" rows="5" cols="40" maxlength="5000">{{ message.content }}</textarea>
     </p>
+
+    <p>Pistearvostelun muokkaus</p>
+    <p>
+      {% for n in range(1, 6) %}
+      <input type="radio" name="points" value="{{n}}"
+      {% if points == n|string %}checked{% endif %}/> {{ n }}
+      {% endfor %}
+    </p>
     <input type="submit" value="Lähetä" />
   </form>
-</body>
 
-</html>
+  {% endblock %}
