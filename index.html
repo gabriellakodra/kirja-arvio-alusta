@@ -1,73 +1,58 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Kirjakulma</title>
-</head>
+{% block title %}Kirjakulma{% endblock %}
 
-<body>
-  <div class="header">
-  <h1>Kirjakulma</h1>
-  </div>
-  <div class="nav">
-  <p>
-    <a href="/search">Haku</a> |
-    <a href="/register">Luo tunnus</a> |
-    {% if session.user_id %}
-    <a href="/logout">Kirjaudu ulos</a> |
-    <a href="/user/{{session.user_id}}">Profiili</a>
-    {% else %}
-    <a href="/login">Kirjaudu sisään</a>
-    {% endif %}
-  </p>
+{% block content %}
 
-  </d />
-  {% for thread in threads %}
-  <div class="thread">
+<h2>Kirja-arvostelut</h2>
+
+{% for message in get_flashed_messages() %}
+<p class="info">
+  {{ message }}
+</p>
+{% endfor %}
+
+{% for thread in threads %}
+<div class="thread">
   <p>
     <a href="/thread/{{ thread.id }}">{{ thread.title }}</a>
-    <br />
+  </p>
+  <p>
     {{ thread.total }} kommenttia, uusin {{ thread.last }}
   </p>
-  <hr />
-  </div>
-  {% endfor %}
+</div>
+{% endfor %}
+
+<p class="page-nav">
+  <a href="/{{ page - 1 }}">&lt;&lt;</a>
+  Sivu {{ page }}/{{ page_count }}
+  <a href="/{{ page + 1 }}">&gt;&gt;</a>
+</p>
+
+{% if session.user_id %}
+<h3>Uusi kirjaketju</h3>
+
+<form action="/new_thread" method="post">
+  <p>
+    <label for="title">Kirjailija / kirjan nimi</label>:<br />
+    <input type="text" id="title" name="title" maxlength="100" required />
+  </p>
+
+  <p>Pistearvostelu:</p>
 
   <p>
-    <a href="/{{ page - 1 }}">&lt;&lt;</a>
-    Sivu {{ page }}/{{ page_count }}
-    <a href="/{{ page + 1 }}">&gt;&gt;</a>
+    <input type="radio" name="points" value="1" /> 1
+    <input type="radio" name="points" value="2" /> 2
+    <input type="radio" name="points" value="3" /> 3
+    <input type="radio" name="points" value="4" /> 4
+    <input type="radio" name="points" value="5" /> 5
   </p>
-  <hr />
-  </div>
-
-  <div class="bookthread">
-  {% if session.user_id %}
-  <h2>Uusi kirjaketju</h2>
-
-  <form action="/new_thread" method="post">
-    <p>
-      Kirjailija / Kirjan nimi:<br />
-      <input type="text" name="title" maxlength="100" required />
-    </p>
-    <p>
-      Kommentti:<br />
-      <textarea name="content" rows="5" cols="40" maxlength="5000"></textarea>
-    </p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Lähetä" />
-  </form>
-  </div>
-  {% endif %}
-
-  {% for message in get_flashed_messages() %}
-  <p class="info">
-    {{ message }}
+    <label for="content">Kommentti</label>:<br />
+    <textarea id="content" name="content" rows="5" cols="40" maxlength="5000"></textarea>
   </p>
-  {% endfor %}
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="submit" value="Lähetä" />
+</form>
+{% endif %}
 
-  <link rel="stylesheet" href="/static/main.css">
-
-</body>
-
-</html>
+{% endblock %}
